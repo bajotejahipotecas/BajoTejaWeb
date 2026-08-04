@@ -22,7 +22,8 @@
     padding:20px;
   }
   .wrap{width:100%; max-width:480px;}
-  .brand{display:flex; align-items:center; gap:10px; justify-content:center; margin-bottom:18px;}
+  .brand{display:flex; align-items:center; gap:10px; justify-content:center; margin-bottom:18px; cursor:pointer;}
+  .brand:focus-visible{outline:3px solid var(--terra); outline-offset:4px; border-radius:8px;}
   .brand svg{display:block;}
   .brand span{font-family:'Poppins',sans-serif; font-weight:600; font-size:20px; color:var(--navy); letter-spacing:.3px;}
   .card{
@@ -86,7 +87,7 @@
 </head>
 <body>
 <div class="wrap">
-  <div class="brand">
+  <div class="brand" id="brand" role="button" tabindex="0" title="Volver al inicio" aria-label="Volver al inicio">
     <svg width="34" height="26" viewBox="0 0 52 40" aria-hidden="true">
       <path d="M26 15 L26 7" stroke="#C9744E" stroke-width="4" stroke-linecap="round"/>
       <path d="M10 30 L26 15 L42 30" fill="none" stroke="#16263F" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
@@ -119,7 +120,7 @@ var steps = [
   { id:"precio", eyebrow:"La vivienda", q:"Precio aproximado de la vivienda", showIf:soloCompra,
     opts:["Menos de 150.000 €","150.000 – 250.000 €","250.000 – 400.000 €","Más de 400.000 €"] },
   { id:"ahorro", eyebrow:"Tu ahorro", q:"¿Cuánto tienes ahorrado?", showIf:soloCompra,
-    opts:["Menos de 20.000 €","20.000 – 40.000 €","40.000 – 80.000 €","Más de 80.000 €"] },
+    opts:["Menos de 3.000 €","3.000 – 20.000 €","20.000 – 50.000 €","Más de 50.000 €"] },
   { id:"ingresos", eyebrow:"Ingresos", q:"Ingresos netos del hogar al mes", showIf:soloCompra,
     opts:["Menos de 1.500 €","1.500 – 3.000 €","3.000 – 5.000 €","Más de 5.000 €"] }
 ];
@@ -259,6 +260,16 @@ function renderDone(){
 }
 
 renderStep(0);
+
+// El logo vuelve al inicio (reinicia el formulario)
+(function(){
+  var brand = document.getElementById('brand');
+  function toStart(){ state = {}; current = 0; document.querySelector('.foot').style.display = ''; renderStep(0); }
+  brand.addEventListener('click', toStart);
+  brand.addEventListener('keydown', function(e){
+    if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); toStart(); }
+  });
+})();
 </script>
 </body>
 </html>
