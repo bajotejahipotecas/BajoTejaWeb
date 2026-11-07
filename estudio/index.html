@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Estudio de viabilidad · Bajo Teja</title>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#16263F; --navy-deep:#0E1B2E; --beige:#F1E7D3; --sand:#E2D2B4;
+    --terra:#C9744E; --terra-dark:#B0623F; --taupe:#6F5A40; --card:#FFFFFF;
+    --radius:14px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:'Poppins',sans-serif; color:var(--navy);
+    background:var(--beige);
+    min-height:100vh; display:flex; align-items:center; justify-content:center;
+    padding:20px;
+  }
+  .wrap{width:100%; max-width:480px;}
+  .brand{display:flex; align-items:center; gap:10px; justify-content:center; margin-bottom:18px; cursor:pointer;}
+  .brand:focus-visible{outline:3px solid var(--terra); outline-offset:4px; border-radius:8px;}
+  .brand svg{display:block;}
+  .brand span{font-family:'Poppins',sans-serif; font-weight:600; font-size:20px; color:var(--navy); letter-spacing:.3px;}
+  .card{
+    background:var(--card); border-radius:var(--radius);
+    box-shadow:0 10px 40px rgba(22,38,63,.10);
+    padding:26px 24px 24px; position:relative; overflow:hidden;
+  }
+  .progress{height:6px; background:var(--sand); border-radius:6px; overflow:hidden; margin-bottom:6px;}
+  .progress-fill{height:100%; width:0%; background:var(--terra); border-radius:6px; transition:width .35s ease;}
+  .step-count{font-size:12px; color:var(--taupe); letter-spacing:.06em; text-transform:uppercase; margin:0 0 20px;}
+  .eyebrow{font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--terra); font-weight:600; margin:0 0 8px;}
+  h1{font-family:'Poppins',sans-serif; font-weight:600; font-size:23px; line-height:1.25; margin:0 0 20px; color:var(--navy);}
+  .options{display:flex; flex-direction:column; gap:10px;}
+  .opt{
+    font-family:'Poppins',sans-serif; font-size:16px; text-align:left; color:var(--navy);
+    background:#fff; border:1.5px solid #DDD3C0; border-radius:12px;
+    padding:15px 16px; cursor:pointer; transition:all .15s ease;
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+  }
+  .opt:hover{border-color:var(--navy); background:#FAF6EE;}
+  .opt:focus-visible{outline:3px solid var(--terra); outline-offset:2px;}
+  .opt.sel{background:var(--navy); border-color:var(--navy); color:var(--beige);}
+  .opt .tick{opacity:0; font-size:18px;}
+  .opt.sel .tick{opacity:1;}
+  .field{margin-bottom:14px;}
+  .field label{display:block; font-size:14px; font-weight:500; margin-bottom:6px; color:var(--navy);}
+  .field input{
+    width:100%; font-family:'Poppins',sans-serif; font-size:16px; color:var(--navy);
+    padding:13px 14px; border:1.5px solid #DDD3C0; border-radius:12px; background:#fff;
+  }
+  .field input:focus{outline:none; border-color:var(--navy);}
+  .field .opt-note{font-size:12px; color:var(--taupe); font-weight:400;}
+  .consent{display:flex; gap:10px; align-items:flex-start; margin:16px 0 4px; font-size:13px; color:var(--taupe); line-height:1.5;}
+  .consent input{margin-top:2px; width:18px; height:18px; accent-color:var(--terra); flex:none;}
+  .consent a{color:var(--navy);}
+  .cta{
+    width:100%; font-family:'Poppins',sans-serif; font-weight:600; font-size:16px;
+    color:#FBEFE7; background:var(--terra); border:none; border-radius:12px;
+    padding:16px; cursor:pointer; margin-top:14px; transition:background .15s ease;
+  }
+  .cta:hover{background:var(--terra-dark);}
+  .cta:disabled{background:#D9CDB8; color:#fff; cursor:not-allowed;}
+  .back{
+    background:none; border:none; color:var(--taupe); font-family:'Poppins',sans-serif;
+    font-size:14px; cursor:pointer; padding:6px 0; margin-top:16px; display:inline-flex; align-items:center; gap:6px;
+  }
+  .back:hover{color:var(--navy);}
+  .foot{text-align:center; font-size:12px; color:var(--taupe); margin-top:16px; line-height:1.5;}
+  .done{text-align:center; padding:14px 4px;}
+  .done .roofwrap{margin:6px auto 18px;}
+  .done h1{font-size:24px; margin-bottom:10px;}
+  .done p{font-family:'Poppins',sans-serif; font-size:15px; color:var(--taupe); line-height:1.6; margin:0 auto 22px; max-width:340px;}
+  .wa{
+    display:inline-flex; align-items:center; gap:8px; text-decoration:none;
+    font-family:'Poppins',sans-serif; font-weight:600; font-size:15px; color:var(--navy);
+    background:var(--sand); padding:13px 22px; border-radius:12px;
+  }
+  .wa:hover{background:#D6C4A2;}
+  @media (prefers-reduced-motion:reduce){*{transition:none !important;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand" id="brand" role="button" tabindex="0" title="Ir a la página de inicio" aria-label="Ir a la página de inicio">
+    <svg width="34" height="26" viewBox="0 0 52 40" aria-hidden="true">
+      <path d="M26 15 L26 7" stroke="#C9744E" stroke-width="4" stroke-linecap="round"/>
+      <path d="M10 30 L26 15 L42 30" fill="none" stroke="#16263F" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <span>Bajo Teja</span>
+  </div>
+
+  <div class="card" id="card"></div>
+
+  <p class="foot">Estudio de viabilidad gratuito y sin compromiso · Te respondemos en menos de 24 h</p>
+</div>
+
+<script>
+/* ====== CONFIG: cambia esto al publicar ====== */
+var WHATSAPP = "34600000000"; /* tu número, formato internacional sin + ni espacios */
+var WEB3FORMS_KEY = "6405b733-76c8-45ce-ac2e-6442c19abe98"; /* pega aquí tu clave de web3forms.com (gratis).
+   Los leads llegarán al correo que asocies a esa clave. Mientras ponga
+   "TU_ACCESS_KEY", el formulario funciona en local pero no envía nada. */
+/* Para recibir los leads en tu correo/CRM al publicar, conecta un endpoint
+   (p. ej. Formspree) en la función submitLead(). Marcado con TODO abajo.   */
+
+var REFI = "Mejorar mi hipoteca actual";
+var soloCompra = function(st){ return st.objetivo !== REFI; };
+
+var steps = [
+  { id:"objetivo", eyebrow:"Empecemos", q:"¿Qué quieres hacer?",
+    opts:["Comprar mi primera vivienda","Comprar para invertir","Mejorar mi hipoteca actual","Aún no lo tengo claro"] },
+  { id:"momento", eyebrow:"Tu situación", q:"¿En qué punto estás?", showIf:soloCompra,
+    opts:["Solo estoy explorando","Buscando vivienda","Ya tengo una elegida"] },
+  { id:"precio", eyebrow:"La vivienda", q:"Precio aproximado de la vivienda", showIf:soloCompra,
+    opts:["Menos de 150.000 €","150.000 – 250.000 €","250.000 – 400.000 €","Más de 400.000 €"] },
+  { id:"ahorro", eyebrow:"Tu ahorro", q:"¿Cuánto tienes ahorrado?", showIf:soloCompra,
+    opts:["Menos de 3.000 €","3.000 – 20.000 €","20.000 – 50.000 €","Más de 50.000 €"] },
+  { id:"ingresos", eyebrow:"Ingresos", q:"Ingresos netos del hogar al mes", showIf:soloCompra,
+    opts:["Menos de 1.500 €","1.500 – 3.000 €","3.000 – 5.000 €","Más de 5.000 €"] }
+];
+
+var state = {}; var current = 0;
+var card = document.getElementById("card");
+
+function applies(s){ return !s.showIf || s.showIf(state); }
+function activeList(){ return steps.filter(applies); }
+function nextIndex(from){ for(var j=from+1;j<steps.length;j++){ if(applies(steps[j])) return j; } return -1; }
+function prevIndex(from){ for(var j=from-1;j>=0;j--){ if(applies(steps[j])) return j; } return -1; }
+
+function renderStep(i){
+  var s = steps[i];
+  var active = activeList();
+  var pos = active.indexOf(s);
+  var pct = Math.round((pos/(active.length+1))*100);
+  var html = '';
+  html += '<div class="progress"><div class="progress-fill" style="width:'+pct+'%"></div></div>';
+  html += '<p class="step-count">Pregunta '+(pos+1)+' de '+active.length+'</p>';
+  html += '<p class="eyebrow">'+s.eyebrow+'</p>';
+  html += '<h1>'+s.q+'</h1>';
+  html += '<div class="options">';
+  s.opts.forEach(function(o){
+    var sel = state[s.id]===o ? ' sel' : '';
+    html += '<button class="opt'+sel+'" data-v="'+o+'">'+o+'<span class="tick">✓</span></button>';
+  });
+  html += '</div>';
+  if(pos>0){ html += '<button class="back">← Atrás</button>'; }
+  card.innerHTML = html;
+
+  Array.prototype.forEach.call(card.querySelectorAll('.opt'), function(btn){
+    btn.addEventListener('click', function(){
+      state[s.id] = btn.getAttribute('data-v');
+      Array.prototype.forEach.call(card.querySelectorAll('.opt'), function(b){ b.classList.remove('sel'); });
+      btn.classList.add('sel');
+      setTimeout(function(){ next(); }, 180);
+    });
+  });
+  var back = card.querySelector('.back');
+  if(back){ back.addEventListener('click', function(){ current = prevIndex(i); renderStep(current); }); }
+}
+
+function next(){
+  var nx = nextIndex(current);
+  if(nx !== -1){ current = nx; renderStep(current); }
+  else { renderContact(); }
+}
+
+function renderContact(){
+  var html = '';
+  var active = activeList();
+  html += '<div class="progress"><div class="progress-fill" style="width:'+Math.round((active.length/(active.length+1))*100)+'%"></div></div>';
+  html += '<p class="step-count">Último paso</p>';
+  html += '<p class="eyebrow">Casi está</p>';
+  html += '<h1>¿A quién le damos la buena noticia?</h1>';
+  html += '<div class="field"><label>Nombre</label><input id="f-nombre" type="text" placeholder="María García" autocomplete="name"></div>';
+  html += '<div class="field"><label>Teléfono o WhatsApp</label><input id="f-tel" type="tel" placeholder="600 00 00 00" autocomplete="tel"></div>';
+  html += '<div class="field"><label>Email <span class="opt-note">(opcional)</span></label><input id="f-email" type="email" placeholder="maria@email.com" autocomplete="email"></div>';
+  html += '<label class="consent"><input type="checkbox" id="f-consent"><span>He leído y acepto la <a href="../privacidad/" target="_blank">política de privacidad</a> y que Bajo Teja me contacte sobre mi estudio.</span></label>';
+  html += '<button class="cta" id="submit" disabled>Solicitar mi estudio gratis</button>';
+  html += '<button class="back">← Atrás</button>';
+  card.innerHTML = html;
+
+  var nombre = card.querySelector('#f-nombre');
+  var tel = card.querySelector('#f-tel');
+  var email = card.querySelector('#f-email');
+  var consent = card.querySelector('#f-consent');
+  var submit = card.querySelector('#submit');
+
+  function validate(){
+    submit.disabled = !(nombre.value.trim() && tel.value.trim() && consent.checked);
+  }
+  [nombre,tel].forEach(function(el){ el.addEventListener('input', validate); });
+  consent.addEventListener('change', validate);
+
+  submit.addEventListener('click', function(){
+    state.nombre = nombre.value.trim();
+    state.tel = tel.value.trim();
+    state.email = email.value.trim();
+    submitLead();
+  });
+
+  var back = card.querySelector('.back');
+  back.addEventListener('click', function(){ current = prevIndex(steps.length); renderStep(current); });
+}
+
+function leadText(){
+  var L = steps.filter(applies).filter(function(s){ return state[s.id]; }).map(function(s){ return s.q+": "+state[s.id]; });
+  L.push("Nombre: "+state.nombre);
+  L.push("Teléfono: "+state.tel);
+  if(state.email) L.push("Email: "+state.email);
+  return "Nuevo estudio de viabilidad — Bajo Teja%0A%0A" + L.join("%0A");
+}
+
+function submitLead(){
+  var submit = document.getElementById('submit');
+  // reunir solo las respuestas que aplican + contacto
+  var data = {};
+  steps.filter(applies).filter(function(s){ return state[s.id]; })
+       .forEach(function(s){ data[s.q] = state[s.id]; });
+  data["Nombre"] = state.nombre;
+  data["Teléfono"] = state.tel;
+  if(state.email) data["Email"] = state.email;
+
+  // sin clave configurada (modo local): mostramos gracias sin enviar
+  if(!WEB3FORMS_KEY || WEB3FORMS_KEY === "TU_ACCESS_KEY"){ renderDone(); return; }
+
+  if(submit){ submit.disabled = true; submit.textContent = "Enviando…"; }
+  var payload = {
+    access_key: WEB3FORMS_KEY,
+    subject: "Nuevo estudio de viabilidad — Bajo Teja",
+    from_name: "Bajo Teja · Formulario web"
+  };
+  for(var k in data){ payload[k] = data[k]; }
+
+  fetch("https://api.web3forms.com/submit", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "Accept": "application/json" },
+    body: JSON.stringify(payload)
+  }).then(function(r){ return r.json(); })
+    .then(function(){ renderDone(); })
+    .catch(function(){ renderDone(); }); // aunque falle el envío, no dejamos al cliente colgado
+}
+
+function renderDone(){
+  var html = '';
+  html += '<div class="done">';
+  html += '<div class="roofwrap"><svg width="60" height="46" viewBox="0 0 52 40" aria-hidden="true">';
+  html += '<path d="M26 15 L26 7" stroke="#C9744E" stroke-width="4" stroke-linecap="round"/>';
+  html += '<path d="M8 31 L26 15 L44 31" fill="none" stroke="#16263F" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>';
+  html += '<h1>¡Hecho, '+ (state.nombre.split(" ")[0]||"") +'!</h1>';
+  html += '<p>Ya tenemos tu solicitud. Revisamos tu caso y te decimos si tu hipoteca es viable en menos de 24 h. Sin compromiso.</p>';
+  html += '</div>';
+  card.innerHTML = html;
+  document.querySelector('.foot').style.display = 'none';
+}
+
+renderStep(0);
+
+// El logo lleva a la página de inicio
+(function(){
+  var brand = document.getElementById('brand');
+  function toStart(){ location.href = '../'; }
+  brand.addEventListener('click', toStart);
+  brand.addEventListener('keydown', function(e){
+    if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); toStart(); }
+  });
+})();
+</script>
+</body>
+</html>
