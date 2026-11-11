@@ -165,7 +165,10 @@
     const f = firmaDe('oferta');
     const leer = f ? `<button class="btn btn-suave" type="button" data-leer="oferta">Leer la propuesta</button>` : '';
     const cierre = {
-      aceptada: `<p class="ok">${f?.firmado ? `Has firmado y aceptado la propuesta el ${esc(fechaCorta(f.firmado_at))}.` : 'Has aceptado la propuesta.'} Te enviaremos la Nota de Encargo.</p>`,
+      aceptada: f && !f.firmado
+        ? `<p class="ok">Has aceptado la propuesta. Fírmala para confirmarla.</p>
+          <div class="acciones">${leer}<button class="btn btn-primario" type="button" data-firmar="oferta">Firmar</button></div>`
+        : `<p class="ok">${f?.firmado ? `Has firmado y aceptado la propuesta el ${esc(fechaCorta(f.firmado_at))}.` : 'Has aceptado la propuesta.'} Te enviaremos la Nota de Encargo.</p>`,
       rechazada: '<p class="suave">Has rechazado la propuesta.</p>',
       enviada: f
         ? `<div class="acciones">${leer}<button class="btn btn-primario" type="button" data-firmar="oferta">Firmar y aceptar</button>
